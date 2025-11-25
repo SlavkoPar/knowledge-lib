@@ -6,7 +6,14 @@ export default defineConfig({
    plugins: [react()],
    'base': '/knowledge-lib',
    build: {
-      sourcemap: true
+      sourcemap: true,
+      rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].js`,
+        chunkFileNames: `assets/[name].js`,
+        assetFileNames: `assets/[name].[ext]`
+      }
+    }
    },
    resolve: {
       alias: {
