@@ -414,5 +414,10 @@ export interface IUser {
 	isDarkMode?: boolean;
 }
 
+export interface IChatBotDlgNavigatorMethods {
+	resetNavigator: () => void;
+	//loadSubTree: (categoryRow: ICategoryRow | null) => void;
+}
+
 export type GlobalActions = ActionMap<GlobalPayload>[keyof ActionMap<GlobalPayload>];
 

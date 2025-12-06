@@ -16,12 +16,12 @@ export interface ICategoryRowDto extends IDtoKey {
 	Title: string;
 	Link: string | null;
 	Header: string;
-	Variations: string[];
 	Level: number;
 	HasSubCategories: boolean;
-	SubCategoryRowDtos: ICategoryRowDto[];
+	RowDtos?: ICategoryRowDto[];
 	NumOfQuestions: number;
 	QuestionRowDtos?: IQuestionRowDto[];
+	Variations?: string[];
 	HasMoreQuestions?: boolean;
 	IsExpanded?: boolean;
 }
@@ -60,10 +60,10 @@ export interface ICategoryRow extends ICategoryKey { //}, IRecord {
 	header: string;
 	level: number;
 	hasSubCategories: boolean;
-	categoryRows: ICategoryRow[];
-	variations: string[];
+	categoryRows?: ICategoryRow[];
+	variations?: string[];
 	numOfQuestions: number;
-	questionRows: IQuestionRow[];
+	questionRows?: IQuestionRow[];
 	hasMoreQuestions?: boolean;
 	isExpanded?: boolean;
 	titlesUpTheTree?: string;
@@ -88,7 +88,7 @@ export class CategoryRowDto {
 			Variations: [],
 			// TODO proveri []
 			HasSubCategories: false,
-			SubCategoryRowDtos: [],
+			RowDtos: [],
 			NumOfQuestions: 0,
 			QuestionRowDtos: [],
 			Level: 0,
@@ -99,10 +99,11 @@ export class CategoryRowDto {
 	categoryRowDto: ICategoryRowDto;
 }
 
+
 export class CategoryRow {
 	constructor(categoryRowDto: ICategoryRowDto) {
 		const { TopId, Id, ParentId, Kind, Title, Link, Header, Variations, Level,
-			HasSubCategories, SubCategoryRowDtos,
+			HasSubCategories, RowDtos,
 			NumOfQuestions, QuestionRowDtos,
 			IsExpanded } = categoryRowDto;
 		this.categoryRow = {
@@ -115,7 +116,7 @@ export class CategoryRow {
 			titlesUpTheTree: '', // traverse up the tree, until root
 			variations: Variations,
 			hasSubCategories: HasSubCategories!,
-			categoryRows: SubCategoryRowDtos.map(dto => new CategoryRow({ ...dto, TopId }).categoryRow),
+			categoryRows: RowDtos ? RowDtos.map(dto => new CategoryRow({ ...dto, TopId }).categoryRow): [],
 			numOfQuestions: NumOfQuestions,
 			questionRows: QuestionRowDtos
 				? QuestionRowDtos.map(dto => new QuestionRow({ ...dto, TopId: TopId ?? undefined }).questionRow)
@@ -169,7 +170,12 @@ export interface ICatDto {
 	Id: string;
 	ParentId?: string; // it is null for Top Categories
 	Title: string;
+	Kind: number,
 	Level: number;
+	HasSubCategories: boolean;
+	NumOfQuestions: number,
+	Link?: string;
+	Header: string
 }
 
 export interface ICat {
@@ -178,19 +184,25 @@ export interface ICat {
 	parentId: string | null; // it is null for Top Categories
 	level: number;
 	title: string;
+	hasSubCategories: boolean;
+	link: string;
 	categoryTitle?: string;
-	titlesUpTheTree?: string
+	titlesUpTheTree?: string;
+	catRows: ICat[];	
 }
 
 export class Cat {
 	constructor(catDto: ICatDto) {
-		const { TopId, ParentId, Id, Level, Title } = catDto;
+		const { TopId, ParentId, Id, Level, Title, HasSubCategories, Link } = catDto;
 		this.cat = {
 			topId: TopId,
 			id: Id,
 			parentId: ParentId ?? null, // it is null for Top Categories
 			level: Level,
-			title: Title
+			title: Title,
+			hasSubCategories: HasSubCategories,
+			link: Link ?? '',
+			catRows: []
 		}
 	}
 	cat: ICat
@@ -341,10 +353,10 @@ export class CategoryKey {
 export class Category {
 	constructor(dto: ICategoryDto) {
 		const { TopId, Id, ParentId, Kind, Title, Link, Header, Level, Variations, NumOfQuestions,
-			HasSubCategories, SubCategoryRowDtos, QuestionRowDtos, IsExpanded, Doc1 } = dto;
+			HasSubCategories, RowDtos: rowDtos, QuestionRowDtos, IsExpanded, Doc1 } = dto;
 
-		const categoryRows = SubCategoryRowDtos
-			? SubCategoryRowDtos.map((rowDto: ICategoryRowDto) => new CategoryRow(rowDto).categoryRow)
+		const categoryRows = rowDtos
+			? rowDtos.map((rowDto: ICategoryRowDto) => new CategoryRow(rowDto).categoryRow)
 			: [];
 
 		const questionRows = QuestionRowDtos
@@ -390,7 +402,7 @@ export class CategoryDto {
 			Header: header ?? '',
 			Level: level,
 			HasSubCategories: true,
-			SubCategoryRowDtos: [],
+			RowDtos: [],
 			NumOfQuestions: 0,
 			QuestionRowDtos: [],
 			Variations: variations,

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 //import { Container, Row, Col, Button, Form, ListGroup, Offcanvas, Stack } from "react-bootstrap";
 import { Container, Row, Col, Button, Offcanvas } from "react-bootstrap";
 
-
 import { AutoSuggestQuestions } from './categories/AutoSuggestQuestions';
 
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,11 +10,12 @@ import { AutoSuggestQuestions } from './categories/AutoSuggestQuestions';
 
 import { type IQuestionEx, type IQuestionKey } from './categories/types'
 
-import { type IChatBotAnswer, type INextAnswer } from './global/types';
+import { type IChatBotAnswer, type IChatBotDlgNavigatorMethods, type INextAnswer } from './global/types';
 
 import Q from './assets/Q.png';
 import A from './assets/A.png';
 import { useData } from './hooks/useData';
+import ChatBotDlgNavigator from './ChatBotDlgNavigator';
 //import { useCategoryDispatch } from './categories/CategoryProvider';
 //import { isMobile } from 'react-device-detect';
 
@@ -45,9 +45,12 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     const tekst = 'rem';
     const [autoSuggestionValue, setAutoSuggestionValue] = useState(tekst!)
     //    const [setNewQuestion, getCurrQuestion, getNextChatBotAnswer] = useAI([]);
+    const childRef = useRef<IChatBotDlgNavigatorMethods | null>(null);
+
 
     const [
         allCats, loadCats,
+        allCatRows, 
         getQuestion, hasMoreAnswers, getNextAnswer,
         searchQuestions,
         addHistory, addHistoryFilter
@@ -90,28 +93,16 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     // }, [])
 
 
-    const onEntering = async (node: HTMLElement, isAppearing: boolean): Promise<unknown> => {
-        console.log(node, isAppearing);
-        /*
-        setCatLevels([]);
-        const parentId = 'MTS'; // null
-        const res = await getSubCats(parentId);
-        const { subCats, parentHeader } = res;
-        console.log('/////////////////////////////////////////////////////', subCats)
-        setCatLevels((prevState) => ([
-            ...prevState,
-            {
-                level: 1,
-                catId: parentId,
-                header: parentHeader,
-                subCats,
-                subCatIdSelected: null
-            }
-        ]))
-            */
-        return;
+    
+    const onEntering = async (/*node: HTMLElement, isAppearing: boolean*/): Promise<any> => {
+        const startTime = performance.now();
+        await childRef?.current?.resetNavigator();
+        // const rows = await childRef?.current?.getTopRows();
+        // setTopRows(rows || []);
+        const endTime = performance.now();
+        const elapsedTime = endTime - startTime;
+        console.log(`Execution time: ${elapsedTime} milliseconds`);
     }
-
 
     const scrollableRef = useRef<HTMLDivElement>(null);
 
@@ -440,6 +431,63 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
 
     return (
         <div className="pe-6 overflow-auto chat-bot-dlg">
+            <style>{`
+                .card-header {
+                    padding: 0.0rem 0.03rem;
+                    padding-right: 0;
+                    font-size: 0.8rem;
+                }
+                // .card-header button  {
+                //     border: 0.3px solid silver;
+                //     border-radius: 3px;
+                //     text-align: left;
+                // }
+
+                .card-body {
+                    padding: 0.0rem 0.5rem;
+                    padding-right: 0;
+                    font-size: 0.6rem;
+                }
+
+                .accordion-body {
+                    padding: 0.3rem 0.3rem;
+                    font-size: 0.6rem;
+                }
+
+                .accordion-button  {
+                    padding: 0rem 0.2rem !important;
+                    padding-right: 0 !important;
+                    border: 0; //px solid inset;
+                    //border-radius: 3px;
+                    //text-align: left;
+                    font-size: 1rem;
+                }
+                    
+                ul {
+                    list-style-type: none;
+                }
+
+                .cat-link {
+                    // text-decoration:  none;
+                    color: inherit;
+                }
+
+                .cat-link.btn {
+                    padding: 0;
+                }
+
+                .cat-title {
+                    // text-decoration:  none;
+                    color: inherit;
+                }
+
+                .accordion-button.hide-icon::after {
+                    display: none;
+                    padding: 0rem 0.2rem !important;
+                    padding-right: 0 !important;
+                }
+            }
+            `}</style>
             {/* backdrop="static" */}
             <Offcanvas show={show} onHide={onHide} placement='end' scroll={true} backdrop={true} onEntering={onEntering}> {/* backdropClassName='chat-bot-dlg' */}
                 <Offcanvas.Header closeButton>
@@ -451,12 +499,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                     <Container id='container' fluid className='text-primary'> {/* align-items-center" */}
                         <Row className="m-0">
                             <Col>
-                                {/* <p className='p-0 m-0 fw-lighter'>For test, Select:</p>
-                                <ul className="m-0">
-                                    <li className='p-0 fw-lighter'>Sale</li>
-                                    <li className='mx-2 fw-lighter'>Phones, TV, ...</li>
-                                    <li className='mx-4 p-0 mb-4 fw-lighter'>Televisions, remote controllers, ...</li>
-                                </ul> */}
+                                <ChatBotDlgNavigator allCatRows={allCatRows} ref={childRef} />
                             </Col>
                         </Row>
                         {/* badge */}

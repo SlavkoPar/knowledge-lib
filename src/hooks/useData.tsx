@@ -36,6 +36,7 @@ class ChatBotAnswer {
 export const useData = (ws: string): [
   Map<string, ICat> | null, // allCats
   () => Promise<Map<string, ICat>>, // loadCats
+  ICat[], // allCatRows
   (questionKey: IQuestionKey) => Promise<IQuestionEx>, // getQuestion
   //IQuestion | null, // selectedQuestion
   //IChatBotAnswer | null, // firstAnswer
@@ -50,6 +51,7 @@ export const useData = (ws: string): [
   const [authUser] = useState<IAuthUser>({ nickName: 'Pera', name: 'DEMO' });
   const [workspace] = useState(ws);
   const [allCats, setAllCats] = useState<Map<string, ICat> | null>(null);
+  const [allCatRows, setAllCatRows] = useState<ICat[]>([]);
   const [newQuestion, setNewQuestion] = useState<INewQuestion | null>(null);
   const [selectedQuestion, setSelectedQuestion] = useState<IQuestion | null>(null);
   const [hasMoreAnswers, setHasMoreAnswers] = useState(false);
@@ -133,6 +135,7 @@ export const useData = (ws: string): [
               cats.set(id, cat);
             })
             setAllCats(cats);
+            setAllCatRows(Array.from(cats.values()));
             resolve(cats);
           });
       }
@@ -348,8 +351,9 @@ export const useData = (ws: string): [
   }, [workspace]);
 
   return [
-    allCats, 
+    allCats, //Map<string, ICat> | null,
     loadCats,
+    allCatRows, // ICat[]
     getQuestion, 
     // selectedQuestion, 
     hasMoreAnswers, 
