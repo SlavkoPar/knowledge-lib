@@ -140,6 +140,26 @@ export interface IQuestionDtoKey {
 }
 
 
+export interface IQuestionShort {
+	Id: string,
+	Title: string;
+	AssignedAnswers: number;
+	Who: string;
+	When: string;
+}
+
+export interface IQuestionShort {
+	Id: string,
+	Title: string;
+	AssignedAnswers: number;
+	Who: string;
+	When: string;
+}
+
+export interface IQuestionShortEx {
+	rows: IQuestionShort[];
+	HasMoreQuestions: boolean;
+}
 
 export interface IQuestionKey {
 	topId: string,
@@ -454,7 +474,8 @@ export class QuestionKey {
 		}
 	}
 	questionKey: IQuestionKey;
-	toQuery = (workspace: string) => {
+	toQuery = 
+	(workspace: string) => {
 		const { topId, parentId, id } = this.questionKey;
 		return [
 			`qKey.workspace=${encodeURIComponent(workspace)}`,

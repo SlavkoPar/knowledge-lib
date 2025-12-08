@@ -68,6 +68,7 @@ export const protectedResources = {
     KnowledgeAPI: {
         endpointCategoryRow: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/CategoryRow`,
         endpointQuestion: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/Question`,
+        endpointQuestionChat: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/QuestionChat`,
         endpointHistory: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/History`,
         endpointHistoryFilter: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/HistoryFilter`,
         scopes: {

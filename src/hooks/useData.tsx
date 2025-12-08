@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Cat, Question, QuestionKey, type IAssignedAnswer, type ICat, type ICatDto, type IQuestion, type IQuestionDtoEx, type IQuestionEx, type IQuestionKey, type IQuestionRow, type IQuestionRowDto, type IQuestionRowDtosEx } from "../categories/types";
+import { Cat, Question, QuestionKey, type IAssignedAnswer, type ICat, type ICatDto, type ICategoryKey, type IQuestion, type IQuestionDtoEx, type IQuestionEx, type IQuestionKey, type IQuestionRow, type IQuestionRowDto, type IQuestionRowDtosEx, type IQuestionShortEx } from "../categories/types";
 import { HistoryDto, HistoryFilterDto, type IHistory, type IHistoryFilter } from "../global/types";
 import { protectedResources } from "../authConfig";
 
@@ -34,6 +34,7 @@ class ChatBotAnswer {
 
 
 export const useData = (ws: string): [
+  (categoryKey: ICategoryKey) => Promise<IQuestionShortEx>,
   Map<string, ICat> | null, // allCats
   () => Promise<Map<string, ICat>>, // loadCats
   ICat[], // allCatRows
@@ -111,7 +112,7 @@ export const useData = (ws: string): [
     return JSON.parse("")
   }
 
-  const loadCats = useCallback(async (): Promise<Map<string, ICat>> => {
+ const loadCats = useCallback(async (): Promise<Map<string, ICat>> => {
     return new Promise((resolve) => {
       const cats = new Map<string, ICat>();
       try {
@@ -144,7 +145,6 @@ export const useData = (ws: string): [
       }
     });
   }, [workspace]);
-
 
   const getQuestion = async (questionKey: IQuestionKey): Promise<IQuestionEx> => {
     return new Promise((resolve) => {
@@ -348,9 +348,39 @@ export const useData = (ws: string): [
       console.log(error)
       //dispatch({ type: ActionTypes.SET_ERROR, payload: { error: new Error('Server Error') } });
     }
-  }, [workspace]);
+   }, [workspace, newQuestion, authUser]);
+
+
+  const getChatQuestions = async (categoryKey: ICategoryKey): Promise<IQuestionShortEx> => {
+    return new Promise((resolve) => {
+      try {
+        const { topId, id } = categoryKey;
+        //const query = new QuestionKey(questionKey).toQuery(workspace);
+        const url = `${protectedResources.KnowledgeAPI.endpointQuestionChat}/${workspace}/${topId}/${id}/0/20`;
+        console.time();
+        Execute("GET", url)
+          .then((value: object): void => {
+            const x: IQuestionShortEx = value as IQuestionShortEx;
+            console.timeEnd();
+            //const { questionDto, msg } = x;
+            const { rows} = x;
+            if (rows) {
+              resolve(x)
+            }
+            else {
+              resolve(x);
+             }
+          });
+      }
+      catch (error: unknown) {
+        console.log(error);
+        resolve({rows:[], HasMoreQuestions: false});
+      }
+    })
+  }
 
   return [
+    getChatQuestions,
     allCats, //Map<string, ICat> | null,
     loadCats,
     allCatRows, // ICat[]

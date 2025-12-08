@@ -49,12 +49,15 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
 
 
     const [
+        getChatQuestions,
         allCats, loadCats,
         allCatRows, 
         getQuestion, hasMoreAnswers, getNextAnswer,
         searchQuestions,
         addHistory, addHistoryFilter
     ] = useData("DEMO");
+
+    console.log(typeof(getChatQuestions)); // just for linter
 
     useEffect(() => {
         (async () => {

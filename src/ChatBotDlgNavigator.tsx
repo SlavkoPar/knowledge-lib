@@ -1,4 +1,4 @@
-import { useContext, type ReactNode, forwardRef, useImperativeHandle, useState } from 'react';
+import { useContext, type ReactNode, forwardRef, useImperativeHandle, useState, useCallback } from 'react';
 import { Accordion, AccordionContext, Button, Card, useAccordionButton } from "react-bootstrap";
 //import { useNavigate } from "react-router-dom";
 
@@ -6,12 +6,13 @@ import { Accordion, AccordionContext, Button, Card, useAccordionButton } from "r
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faFolder } from '@fortawesome/free-solid-svg-icons'
 
-import { type ICat } from '@/categories/types';
+import { type ICat, type ICategoryKey } from '@/categories/types';
 
 //import Q from '@/assets/Q.png';
 //import A from '@/assets/A.png';
 import type { AccordionEventKey } from 'react-bootstrap/esm/AccordionContext';
 import type { IChatBotDlgNavigatorMethods } from './global/types';
+import { useData } from './hooks/useData';
 // import { useCategoryDispatch } from '@/categories/CategoryProvider';
 
 
@@ -26,6 +27,10 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
         //     navigate(link);
         // }
 
+        const [
+            getChatQuestions
+        ] = useData("DEMO");
+
         const [topRows, setTopRows] = useState<ICat[]>([]);
 
         function ContextAwareToggle({ children, eventKey, hasSubCategories, callback }:
@@ -38,7 +43,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             );
             const isCurrentEventKey = activeEventKey === eventKey;
             return (
-                <button
+                <Button
                     type="button"
                     className={`accordion-button${!hasSubCategories ? ' hide-icon' : ''}`}
                     style={{
@@ -47,8 +52,14 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
                     onClick={decoratedOnClick}
                 >
                     {children}
-                </button>
+                </Button>
             );
+        }
+        const navig = async (row: ICat) => {
+            const { topId, id} = row;
+            const categoryKey: ICategoryKey = { topId, id, parentId: null }
+            const questionShortEx = await getChatQuestions(categoryKey);
+            console.log(questionShortEx);
         }
 
         const CatRow = ({ row }: { row: ICat }) => {
@@ -57,8 +68,9 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
                     <Card.Header>
                         <ContextAwareToggle eventKey={row.id} hasSubCategories={row.hasSubCategories}>
                             {row.link
-                                // onClick={() => navigate(`${row.link}/from_chat`)}
-                                ? <Button href={`https://slavkopar.github.io/knowledge`} variant="link" className="cat-link" target="_blank" >{row.title}</Button>
+                                ? <Button onClick={() => navig(row)} variant="link" className="cat-link">{row.title}</Button>
+                                //? onClick={() => navigate(`${row.link}/from_chat`)}
+                                //? <Button href={`https://slavkopar.github.io/knowledge`} variant="link" className="cat-link" target="_blank" >{row.title}</Button>
                                 : <span className="cat-title">{row.title}</span>
                             }
                         </ContextAwareToggle>
@@ -107,21 +119,18 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
         };
 
         //////////////////
-        const resetNavigator = (): void => {
-            setTopRows([]);
-            allCatRows.forEach(async (catRow) => {
-                catRow.catRows = [];
-                if (catRow.parentId === null) {
-                    await loadSubTree(catRow);
-                    setTopRows(prevTopRows => [...prevTopRows, catRow]);
-                }
-            });
-        }
-
-
         useImperativeHandle(ref, () => ({
-            resetNavigator
-        }), []);
+            resetNavigator: () => {
+                setTopRows([]);
+                allCatRows.forEach(async (catRow) => {
+                    catRow.catRows = [];
+                    if (catRow.parentId === null) {
+                        await loadSubTree(catRow);
+                        setTopRows(prevTopRows => [...prevTopRows, catRow]);
+                    }
+                });
+            }
+        }), [allCatRows]);
 
         return (
             <Accordion defaultActiveKey="" alwaysOpen={true} onSelect={onSelectCategory} >
