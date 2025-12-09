@@ -6,7 +6,7 @@ import { Accordion, AccordionContext, Button, Card, useAccordionButton } from "r
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faFolder } from '@fortawesome/free-solid-svg-icons'
 
-import { type ICat, type ICategoryKey } from '@/categories/types';
+import { type ICat, type ICategoryKey, type IQuestionShort } from '@/categories/types';
 
 //import Q from '@/assets/Q.png';
 //import A from '@/assets/A.png';
@@ -56,10 +56,35 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             );
         }
         const navig = async (row: ICat) => {
-            const { topId, id} = row;
+            const { topId, id } = row;
             const categoryKey: ICategoryKey = { topId, id, parentId: null }
             const questionShortEx = await getChatQuestions(categoryKey);
+            const { rows } = questionShortEx;
             console.log(questionShortEx);
+            let sHTML = "<table><thead><tr> \
+            <th>Id</th>\
+            <th>Title</th>\
+            <th>#Answers</th>\
+            <th>Who</th>\
+            <th>When</th>\
+            </tr></thead><tbody>";
+
+
+            for (let i=0; i < rows.length; i++) {
+                const q: IQuestionShort = rows[i];
+                sHTML += `<tr>\
+                <td>${q.Id}</td>\
+                <td width='30%'>${q.Title}</td>\
+                <td>${q.AssignedAnswers}</td>\
+                <td>${q.Who}</td>\
+                <td>${q.When}</td>\
+                </tr>`;
+            }
+            sHTML += "</tbody></table>";
+            const divQuestions = document.getElementById('divQuestions');
+            if (divQuestions) {
+                divQuestions.innerHTML = sHTML;
+            }
         }
 
         const CatRow = ({ row }: { row: ICat }) => {

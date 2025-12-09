@@ -435,6 +435,10 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     return (
         <div className="pe-6 overflow-auto chat-bot-dlg">
             <style>{`
+                .card {
+                    padding: 0;
+                }
+
                 .card-header {
                     padding: 0.0rem 0.03rem;
                     padding-right: 0;
