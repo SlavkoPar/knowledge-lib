@@ -33,9 +33,6 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
 
 .read-the-docs {
   color: #888;
@@ -70,4 +67,8 @@
 
 #divQuestions table tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+
+.offcanvas.offcanvas-end {
+  width: 350px;
 }
