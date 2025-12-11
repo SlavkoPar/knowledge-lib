@@ -1,5 +1,5 @@
-import { useContext, type ReactNode, forwardRef, useImperativeHandle, useState } from 'react';
-import { Accordion, AccordionContext, Button, Card, useAccordionButton } from "react-bootstrap";
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { Accordion } from "react-bootstrap";
 //import { useNavigate } from "react-router-dom";
 
 
@@ -16,8 +16,8 @@ import { useData } from './hooks/useData';
 // import { useCategoryDispatch } from '@/categories/CategoryProvider';
 
 
-const PINK = 'rgba(255, 192, 203, 0.6)';
-const BLUE = 'rgb(224, 207, 252)';
+// const PINK = 'rgba(255, 192, 203, 0.6)';
+// const BLUE = 'rgb(224, 207, 252)';
 
 const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows: ICat[] }>(
     ({ allCatRows }, ref) => {
@@ -33,6 +33,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
 
         const [topRows, setTopRows] = useState<ICat[]>([]);
 
+        /*
         function ContextAwareToggle({ children, eventKey, hasSubCategories, callback }:
             { children: ReactNode; eventKey: AccordionEventKey; hasSubCategories: boolean; callback?: (eventKey?: AccordionEventKey) => void }) {
 
@@ -55,6 +56,8 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
                 </Button>
             );
         }
+        */
+
         const navig = async (row: ICat) => {
             const { topId, id } = row;
             const categoryKey: ICategoryKey = { topId, id, parentId: null }
@@ -68,7 +71,6 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             <th>Who</th>\
             <th>When</th>\
             </tr></thead><tbody>";
-
 
             for (let i=0; i < rows.length; i++) {
                 const q: IQuestionShort = rows[i];
@@ -87,27 +89,56 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             }
         }
 
-        const CatRow = ({ row }: { row: ICat }) => {
+        // const CatRow = ({ row }: { row: ICat }) => {
+        //     return (
+        //         <Card>
+        //             <Card.Header>
+        //                 <ContextAwareToggle eventKey={row.id} hasSubCategories={row.hasSubCategories}>
+        //                     {row.link
+        //                         ? <Button onClick={() => navig(row)} variant="link" className="cat-link">{row.title}</Button>
+        //                         //? onClick={() => navigate(`${row.link}/from_chat`)}
+        //                         //? <Button href={`https://slavkopar.github.io/knowledge`} variant="link" className="cat-link" target="_blank" >{row.title}</Button>
+        //                         : <span className="cat-title">{row.title}</span>
+        //                     }
+        //                 </ContextAwareToggle>
+        //             </Card.Header>
+        //             <Accordion.Collapse eventKey={row.id}>
+        //                 <Card.Body>
+        //                     {row.hasSubCategories &&
+        //                         <CatList rows={row.catRows} />
+        //                     }
+        //                 </Card.Body>
+        //             </Accordion.Collapse>
+        //         </Card>
+        //     )
+        // }
+     const CatRow = ({ row }: { row: ICat }) => {
+            const { id, hasSubCategories, title } = row;
             return (
-                <Card>
-                    <Card.Header>
-                        <ContextAwareToggle eventKey={row.id} hasSubCategories={row.hasSubCategories}>
+                <Accordion.Item eventKey={id}>
+                    <Accordion.Header className={`${!hasSubCategories ? 'hide-icon' : ''}`}>
+                        {/* <ContextAwareToggle eventKey={row.id} hasSubCategories={row.hasSubCategories} isExpanded={row.isExpanded ? true : false}> */}
                             {row.link
-                                ? <Button onClick={() => navig(row)} variant="link" className="cat-link">{row.title}</Button>
-                                //? onClick={() => navigate(`${row.link}/from_chat`)}
-                                //? <Button href={`https://slavkopar.github.io/knowledge`} variant="link" className="cat-link" target="_blank" >{row.title}</Button>
-                                : <span className="cat-title">{row.title}</span>
+                                ? <a href="#" className="cat-link" onClick={() => navig(row)}>{title}</a>
+                                : <span className="cat-title">{title}</span>
                             }
-                        </ContextAwareToggle>
-                    </Card.Header>
-                    <Accordion.Collapse eventKey={row.id}>
-                        <Card.Body>
+                        {/* </ContextAwareToggle> */}
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        {/* <Card.Body> */}
                             {row.hasSubCategories &&
                                 <CatList rows={row.catRows} />
                             }
+                        {/* </Card.Body> */}
+                    </Accordion.Body>
+                    {/* <Accordion.Collapse eventKey={row.id}>
+                        <Card.Body>
+                            {row.hasSubCategories &&
+                                <CatList rows={row.categoryRows} />
+                            }
                         </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
+                    </Accordion.Collapse> */}
+                </Accordion.Item>
             )
         }
 

@@ -435,29 +435,9 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     return (
         <div className="pe-6 overflow-auto chat-bot-dlg">
             <style>{`
-                .card {
-                    padding: 0;
-                }
-
-                .card-header {
-                    padding: 0.0rem 0.03rem;
-                    padding-right: 0;
-                    font-size: 0.8rem;
-                }
-                // .card-header button  {
-                //     border: 0.3px solid silver;
-                //     border-radius: 3px;
-                //     text-align: left;
-                // }
-
-                .card-body {
+                .accordion-body {
                     padding: 0.0rem 0.5rem;
                     padding-right: 0;
-                    font-size: 0.6rem;
-                }
-
-                .accordion-body {
-                    padding: 0.3rem 0.3rem;
                     font-size: 0.6rem;
                 }
 
@@ -488,7 +468,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                     color: inherit;
                 }
 
-                .accordion-button.hide-icon::after {
+                .accordion-header.hide-icon > button.accordion-button::after {
                     display: none;
                     padding: 0rem 0.2rem !important;
                     padding-right: 0 !important;
