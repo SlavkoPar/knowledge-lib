@@ -12,7 +12,7 @@ import { LogLevel } from "@azure/msal-browser";
  */
 export const msalConfig = {
     auth: {
-        clientId: '15c1c3ef-90d5-4baa-9d92-4c063a1186bf', // This is the ONLY mandatory field that you need to supply. //'15c1c3ef-90d5-4baa-9d92-4c063a1186bf', //
+        clientId: '8bf44418-f99b-4f07-bd07-a31784517810', // This is the ONLY mandatory field that you need to supply. //'15c1c3ef-90d5-4baa-9d92-4c063a1186bf', //
         //authority:  '9678d2de-0c68-47d5-80f3-d1b43b726b0e',
         //clientId: 'f9c4f176-9e7f-424a-b417-86da612252b8', //'15c1c3ef-90d5-4baa-9d92-4c063a1186bf', // This is the ONLY mandatory field that you need to supply.
         //authority: 'https://TrialTenant1qGo77oT.ciamlogin.com', ///9678d2de-0c68-47d5-80f3-d1b43b726b0e', // Replace the placeholder with your tenant subdomain
