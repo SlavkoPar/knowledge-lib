@@ -11,38 +11,24 @@ Currently, two official plugins are available:
 
 ## Example of integration to WordPress site
 
-### Under menu option 'WPCode plugin' select Global Scripts
+ Under menu option 'WPCode plugin' select Global Scripts and add Header, Body and Footer scripts
 
 
-  <div>
-    <div>
-      <br/>
-      <div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>Header
-          <code>
-            &lt;link rel="stylesheet" crossorigin <br />
-            &nbsp;&nbsp;&nbsp;href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
-            <br />
-            &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
-          </code>
-        </div>
-      </div>
-      <div>
-      <br/>
-      <div>Body<div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>
-        <code>
-          &lt;div id="root"&gt;&lt;/div&gt;
-        </code>
-      </div>
-    <div>
-    <br/>
-    <div>Footer
-      <div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>' 
-        <code>
-          &lt;script type="module" crossorigin
-          <br />
-          &nbsp;&nbsp;&nbsp;src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
-        </code>
-      </div>
-  </div>
+### Header
+  <code>
+    &lt;link rel="stylesheet" crossorigin href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
+    <br />
+    &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
+  </code>
+
+### Body
+  <code>
+    &lt;div id="root"&gt;&lt;/div&gt;
+  </code>
+
+### Footer
+  <code>
+    &lt;script type="module" crossorigin src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
+  </code>
 
 
