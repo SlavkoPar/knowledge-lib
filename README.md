@@ -15,20 +15,17 @@ Currently, two official plugins are available:
 
 
 ### Header
-  <code>
+  <pre>
     &lt;link rel="stylesheet" crossorigin href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
-    <br />
     &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
-  </code>
-
+  </pre>
 ### Body
-  <code>
+  <pre>
     &lt;div id="root"&gt;&lt;/div&gt;
-  </code>
-
+  </pre>
 ### Footer
-  <code>
+  <pre>
     &lt;script type="module" crossorigin src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
-  </code>
+  </pre>
 
 
