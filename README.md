@@ -3,10 +3,10 @@
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 
+<br/>
 
 
-
-## Example of integration to WordPress site
+# Example of integration to WordPress site
 
  Under menu option 'WPCode plugin' select Global Scripts and add Header, Body and Footer scripts
 
