@@ -13,7 +13,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 ### Header
   <pre>
-    &lt;link rel="stylesheet" crossorigin href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
+    &lt;link rel="stylesheet" crossorigin <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
     &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
   </pre>
 ### Body
@@ -22,7 +22,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
   </pre>
 ### Footer
   <pre>
-    &lt;script type="module" crossorigin src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
+    &lt;script type="module" crossorigin <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
   </pre>
 
 
