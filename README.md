@@ -11,64 +11,38 @@ Currently, two official plugins are available:
 
 ## Example of integration to WordPress site
 
+### Under menu option 'WPCode plugin' select Global Scripts
 
-```js
 
-    <pre> 
-      <div className="bg-warning w-auto"><b>Plugin</b></div>
-      <div className="bg-warning w-auto"><b>WPCode Code / Global scripts</b></div>
-    </pre>
-    <pre>
-      <div className="bg-warning w-auto"><b>Header</b></div>
-      <code>
-        &lt;link rel="stylesheet" crossorigin <br />
-        &nbsp;&nbsp;&nbsp;href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
-        <br />
-        &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
-      </code>
-      <br /><br />
-      <div className="bg-warning w-auto" style={{ minWidth: '100%' }}><b>Body</b></div>
-      <code>
-        &lt;div id="root"&gt;&lt;/div&gt;
-      </code>
-      <br /><br />
+  <div>
+    <div>
+      <br/>
+      <div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>Header
+          <code>
+            &lt;link rel="stylesheet" crossorigin <br />
+            &nbsp;&nbsp;&nbsp;href="https://slavkopar.github.io/knowledge-lib/assets/index.css" /&gt;
+            <br />
+            &lt;base href="https://slavkopar.github.io/knowledge-lib" /&gt;
+          </code>
+        </div>
+      </div>
+      <div>
+      <br/>
+      <div>Body<div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>
+        <code>
+          &lt;div id="root"&gt;&lt;/div&gt;
+        </code>
+      </div>
+    <div>
+    <br/>
+    <div>Footer
+      <div style='background-color: #76a2d3ff; border: 1px solid #ffffff'>' 
+        <code>
+          &lt;script type="module" crossorigin
+          <br />
+          &nbsp;&nbsp;&nbsp;src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
+        </code>
+      </div>
+  </div>
 
-      <div className="bg-warning w-auto"><b>Footer</b></div>
-      <code>
-        &lt;script type="module" crossorigin
-        <br />
-        &nbsp;&nbsp;&nbsp;src="https://slavkopar.github.io/knowledge-lib/assets/index.js"&gt;&lt;/script&gt;
-      </code>
-      <br />
-      <br />
-    </pre>
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
