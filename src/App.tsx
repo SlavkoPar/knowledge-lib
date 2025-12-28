@@ -121,8 +121,9 @@ function App() {
         </a>
       </div> */}
       <div className="card p-1">
-        <img width="64" height="64" src={stamena}  alt="Chat" className='rounded mx-auto d-block' />
+        
         <Button variant="primary" onClick={handleShow} className='my-1'>
+          <img width="64" height="64" src={stamena}  alt="Chat" className='rounded mx-auto d-block' />
           I am your buddy.
         </Button>
         {/* <button onClick={() => setCount((count) => count + 1)}>
