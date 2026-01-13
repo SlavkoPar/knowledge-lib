@@ -2,10 +2,16 @@ export const formatDate = (date: Date) => date
   ? new Date(date).toLocaleDateString() + " " + new Date(date).toLocaleTimeString()
   : "";
 
-export const formatDateShort = (date: Date) => date
+export const formatDateTimeShort = (date: Date) => date
   // ? (new Date(date).toLocaleDateString() + " " + new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }))
   ? (new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }))
   : "";
+
+export const formatDateShort = (date: Date) => date
+  // ? (new Date(date).toLocaleDateString() + " " + new Date(date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }))
+  ? (new Date(date).toLocaleString([], { dateStyle: 'short' }))
+  : "";
+
 
 export const escapeRegexCharacters = (str: string): string => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

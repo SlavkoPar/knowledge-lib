@@ -148,13 +148,6 @@ export interface IQuestionShort {
 	When: string;
 }
 
-export interface IQuestionShort {
-	Id: string,
-	Title: string;
-	AssignedAnswers: number;
-	Who: string;
-	When: string;
-}
 
 export interface IQuestionShortEx {
 	rows: IQuestionShort[];

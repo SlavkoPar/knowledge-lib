@@ -13,6 +13,7 @@ import { type ICat, type ICategoryKey, type IQuestionShort } from '@/categories/
 import type { AccordionEventKey } from 'react-bootstrap/esm/AccordionContext';
 import type { IChatBotDlgNavigatorMethods } from './global/types';
 import { useData } from './hooks/useData';
+import { formatDateShort } from './utilities';
 // import { useCategoryDispatch } from '@/categories/CategoryProvider';
 
 
@@ -65,7 +66,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             const { rows } = questionShortEx;
             console.log(questionShortEx);
             //  <th>Id</th>
-            let sHTML = "<table style='font-size: 11px;'><thead><tr> \
+            let sHTML = "<table id='questionsTable' style='font-size: 11px;'><thead><tr> \
             <th>Title</th>\
             <th>#Answers</th>\
             <th>Who</th>\
@@ -75,11 +76,12 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             // <td>${q.Id}</td>\
             for (let i=0; i < rows.length; i++) {
                 const q: IQuestionShort = rows[i];
+                const when = formatDateShort(new Date(q.When));
                 sHTML += `<tr>\
                 <td width='30%'>${q.Title}</td>\
                 <td>${q.AssignedAnswers}</td>\
                 <td>${q.Who}</td>\
-                <td>${q.When}</td>\
+                <td>${when}</td>\
                 </tr>`;
             }
             sHTML += "</tbody></table>";
