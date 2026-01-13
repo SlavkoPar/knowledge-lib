@@ -205,6 +205,7 @@ export interface ICat {
 	level: number;
 	title: string;
 	hasSubCategories: boolean;
+	numOfQuestions: number,
 	link: string;
 	categoryTitle?: string;
 	titlesUpTheTree?: string;
@@ -213,7 +214,7 @@ export interface ICat {
 
 export class Cat {
 	constructor(catDto: ICatDto) {
-		const { TopId, ParentId, Id, Level, Title, HasSubCategories, Link } = catDto;
+		const { TopId, ParentId, Id, Level, Title, HasSubCategories, NumOfQuestions, Link } = catDto;
 		this.cat = {
 			topId: TopId,
 			id: Id,
@@ -221,6 +222,7 @@ export class Cat {
 			level: Level,
 			title: Title,
 			hasSubCategories: HasSubCategories,
+			numOfQuestions: NumOfQuestions,
 			link: Link ?? '',
 			catRows: []
 		}
