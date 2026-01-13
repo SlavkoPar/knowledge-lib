@@ -123,7 +123,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
                                 : <span className="cat-title">{title}</span>
                             }
                             { numOfQuestions > 0 &&
-                                <i className='ms-1'>`${numOfQuestions}Q`</i>
+                                <i className='ms-1 fw-light'>{numOfQuestions}Q</i>
                             }
                         {/* </ContextAwareToggle> */}
                     </Accordion.Header>
