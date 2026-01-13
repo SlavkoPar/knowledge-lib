@@ -13,7 +13,6 @@ import { type ICat, type ICategoryKey, type IQuestionShort } from '@/categories/
 import type { AccordionEventKey } from 'react-bootstrap/esm/AccordionContext';
 import type { IChatBotDlgNavigatorMethods } from './global/types';
 import { useData } from './hooks/useData';
-import { formatDateShort } from './utilities';
 // import { useCategoryDispatch } from '@/categories/CategoryProvider';
 
 
@@ -68,7 +67,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             //  <th>Id</th>
             let sHTML = "<table id='questionsTable' style='font-size: 11px;'><thead><tr> \
             <th>Title</th>\
-            <th>#Answers</th>\
+            <th>#Ans</th>\
             <th>Who</th>\
             <th>When</th>\
             </tr></thead><tbody>";
