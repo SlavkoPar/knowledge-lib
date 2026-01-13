@@ -64,8 +64,8 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             const questionShortEx = await getChatQuestions(categoryKey);
             const { rows } = questionShortEx;
             console.log(questionShortEx);
-            let sHTML = "<table style='font-size: 12px;'><thead><tr> \
-            <th>Id</th>\
+            let sHTML = "<table style='font-size: 11px;'><thead><tr> \
+            // <th>Id</th>\
             <th>Title</th>\
             <th>#Answers</th>\
             <th>Who</th>\
@@ -75,7 +75,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             for (let i=0; i < rows.length; i++) {
                 const q: IQuestionShort = rows[i];
                 sHTML += `<tr>\
-                <td>${q.Id}</td>\
+                // <td>${q.Id}</td>\
                 <td width='30%'>${q.Title}</td>\
                 <td>${q.AssignedAnswers}</td>\
                 <td>${q.Who}</td>\
