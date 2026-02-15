@@ -32,6 +32,23 @@ class ChatBotAnswer {
 //   bg: ''
 // }
 
+const endPoints = protectedResources.KnowledgeAPI.endPoints;
+//const initGlobalState: IGlobalState = {
+const KnowledgeAPI = {
+  endpointCategoryRow: endPoints.Category.Row,
+  endpointCategory: endPoints.Category.Category,
+  endpointQuestion: endPoints.Category.Question,
+  endpointQuestionAnswer: endPoints.Category.QuestionAnswer,
+
+  endpointGroupRow: endPoints.Group.Row,
+  endpointGroup: endPoints.Group.Group,
+  endpointAnswer: endPoints.Group.Answer,
+
+  endpointHistory: endPoints.History.endpointHistory,
+  endpointHistoryFilter: endPoints.History.endpointHistoryFilter,
+
+  endpointWorkspace: endPoints.Workspace.endpointWorkspace
+};
 
 export const useData = (ws: string): [
   (categoryKey: ICategoryKey) => Promise<IQuestionShortEx>,
@@ -49,7 +66,7 @@ export const useData = (ws: string): [
 ] => {
 
   // const [globalState, setGlobalState] = useState<IGlobalState>(initialGlobalState);
-  const [authUser] = useState<IAuthUser>({ nickName: 'Pera', name: 'DEMO' });
+  const [authUser] = useState<IAuthUser>({ nickName: 'Demo', name: 'DEMO' });
   const [workspace] = useState(ws);
   const [allCats, setAllCats] = useState<Map<string, ICat> | null>(null);
   const [allCatRows, setAllCatRows] = useState<ICat[]>([]);
@@ -112,12 +129,12 @@ export const useData = (ws: string): [
     return JSON.parse("")
   }
 
- const loadCats = useCallback(async (): Promise<Map<string, ICat>> => {
+  const loadCats = useCallback(async (): Promise<Map<string, ICat>> => {
     return new Promise((resolve) => {
       const cats = new Map<string, ICat>();
       try {
         console.time();
-        const url = `${protectedResources.KnowledgeAPI.endpointCategoryRow}/${workspace}`; // /allCats
+        const url = `${KnowledgeAPI.endpointCategoryRow}/${workspace}`; // /allCats
         Execute("GET", url, null)
           .then((value: object) => {
             console.timeEnd();
@@ -151,7 +168,7 @@ export const useData = (ws: string): [
       try {
         //const { topId, id } = questionKey;
         const query = new QuestionKey(questionKey).toQuery(workspace);
-        const url = `${protectedResources.KnowledgeAPI.endpointQuestion}?${query}`;
+        const url = `${KnowledgeAPI.endpointQuestion}?${query}`;
         console.time();
         Execute("GET", url)
           .then((value: object): void => {
@@ -206,13 +223,13 @@ export const useData = (ws: string): [
       try {
         console.time();
         const filterEncoded = encodeURIComponent(filter);
-        const url = `${protectedResources.KnowledgeAPI.endpointQuestion}/${workspace}/${filterEncoded}/${count}/null`;
+        const url = `${KnowledgeAPI.endpointQuestion}/${workspace}/${filterEncoded}/${count}/null`;
         Execute("GET", url)
           .then((x: object) => {
             const dtosEx: IQuestionRowDtosEx = x as IQuestionRowDtosEx
             const { questionRowDtos, msg } = dtosEx;
             console.log(msg);
-            console.log('questionRowDtos:', { dtos: dtosEx }, protectedResources.KnowledgeAPI.endpointCategoryRow);
+            console.log('questionRowDtos:', { dtos: dtosEx }, KnowledgeAPI.endpointCategoryRow);
             console.timeEnd();
             if (questionRowDtos) {
               const questionRows: IQuestionRow[] = questionRowDtos.map((dto: IQuestionRowDto) => {
@@ -287,7 +304,7 @@ export const useData = (ws: string): [
       try {
         const historyDto = new HistoryDto(history, workspace).historyDto;
         console.log("historyDto", { historyDto })
-        const url = `${protectedResources.KnowledgeAPI.endpointHistory}`;
+        const url = `${KnowledgeAPI.endpointHistory}`;
         console.time()
         await Execute("POST", url, historyDto)
           .then((x: object) => {
@@ -327,7 +344,7 @@ export const useData = (ws: string): [
       }
       const historyFilterDto = new HistoryFilterDto(historyFilter, workspace).historyFilterDto;
       //console.log("historyDto", { historyDto })
-      const url = `${protectedResources.KnowledgeAPI.endpointHistoryFilter}`;
+      const url = `${KnowledgeAPI.endpointHistoryFilter}`;
       console.time()
       await Execute("POST", url, historyFilterDto)
         .then((x: object) => {
@@ -348,7 +365,7 @@ export const useData = (ws: string): [
       console.log(error)
       //dispatch({ type: ActionTypes.SET_ERROR, payload: { error: new Error('Server Error') } });
     }
-   }, [workspace, newQuestion, authUser]);
+  }, [workspace, newQuestion, authUser]);
 
 
   const getChatQuestions = async (categoryKey: ICategoryKey): Promise<IQuestionShortEx> => {
@@ -356,25 +373,25 @@ export const useData = (ws: string): [
       try {
         const { topId, id } = categoryKey;
         //const query = new QuestionKey(questionKey).toQuery(workspace);
-        const url = `${protectedResources.KnowledgeAPI.endpointQuestionChat}/${workspace}/${topId}/${id}/0/20`;
+        const url = `${KnowledgeAPI.endpointQuestionChat}/${workspace}/${topId}/${id}/0/20`;
         console.time();
         Execute("GET", url)
           .then((value: object): void => {
             const x: IQuestionShortEx = value as IQuestionShortEx;
             console.timeEnd();
             //const { questionDto, msg } = x;
-            const { rows} = x;
+            const { rows } = x;
             if (rows) {
               resolve(x)
             }
             else {
               resolve(x);
-             }
+            }
           });
       }
       catch (error: unknown) {
         console.log(error);
-        resolve({rows:[], HasMoreQuestions: false});
+        resolve({ rows: [], HasMoreQuestions: false });
       }
     })
   }
@@ -384,12 +401,12 @@ export const useData = (ws: string): [
     allCats, //Map<string, ICat> | null,
     loadCats,
     allCatRows, // ICat[]
-    getQuestion, 
+    getQuestion,
     // selectedQuestion, 
-    hasMoreAnswers, 
+    hasMoreAnswers,
     getNextAnswer,
     searchQuestions,
-    addHistory, 
+    addHistory,
     addHistoryFilter
   ]
   // useCallback(setNewQuestion, []), 

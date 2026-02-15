@@ -56,26 +56,47 @@ export const msalConfig = {
  * Add here the endpoints and scopes when obtaining an access token for protected web APIs. For more information, see:
  * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/resources-and-scopes.md
  */
-export const protectedResources = {
-    KnowledgeAPI: {
-        endpointCategoryRow: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/CategoryRow`,
-        endpointQuestion: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/Question`,
-        endpointQuestionChat: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/QuestionChat`,
-        endpointHistory: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/History`,
-        endpointHistoryFilter: `${import.meta.env.VITE_KNOWLEDGE_LIB_API_URL}/HistoryFilter`,
+export const protectedResources = (() => {
+    const URL = (import.meta.env.VITE_KNOWLEDGE_API_URL ?? 'UNK') as string;
+    return {
+        KnowledgeAPI: {
+            endPoints: {
+                Category: {
+                    Row: `${URL}/CategoryRow`,
+                    Category: `${URL}/Category`,
+                    Question: `${URL}/Question`,
+                    QuestionAnswer: `${URL}/QuestionAnswer`,
+                    //endpointShortGroup: `${VITE_KNOWLEDGE_LIB_API_URL}/ShortGroup`,
+                },
+                Group: {
+                    Row: `${URL}/GroupRow`,
+                    Group: `${URL}/Group`,
+                    Answer: `${URL}/Answer`
+                    //endpointShortGroup: `${VITE_KNOWLEDGE_LIB_API_URL}/ShortGroup`,
+                },
+                History: {
+                    endpointHistory: `${URL}/History`,
+                    endpointHistoryFilter: `${URL}/HistoryFilter`
+                },
+                Workspace: {
+                    endpointWorkspace: `${URL}/Workspace`
+                }
+            }
+        },
+        
         scopes: {
             read: ['api://a27f5cf6-8359-411b-a430-c4bd8aa5e6af/ToDoList.Read'],
             write: ['api://a27f5cf6-8359-411b-a430-c4bd8aa5e6af/ToDoList.ReadWrite']
-        },
-    },
-};
-
+        }
+    };
+})();
 /**
  * Scopes you add here will be prompted for user consent during sign-in.
  * By default, MSAL.js will add OIDC scopes (openid, profile, email) to any login request.
  * For more information about OIDC scopes, visit:
  * https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
+
 export const loginRequest = {
-    scopes: [...protectedResources.KnowledgeAPI.scopes.read, ...protectedResources.KnowledgeAPI.scopes.write],
+    scopes: [...protectedResources.scopes.read, ...protectedResources.scopes.write]
 };
