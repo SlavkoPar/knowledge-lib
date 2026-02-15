@@ -68,6 +68,7 @@ export const protectedResources = (() => {
                     QuestionAnswer: `${URL}/QuestionAnswer`,
                     //endpointShortGroup: `${VITE_KNOWLEDGE_LIB_API_URL}/ShortGroup`,
                 },
+                endpointQuestionChat: `${URL}/QuestionChat`,
                 Group: {
                     Row: `${URL}/GroupRow`,
                     Group: `${URL}/Group`,

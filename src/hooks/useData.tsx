@@ -39,6 +39,7 @@ const KnowledgeAPI = {
   endpointCategory: endPoints.Category.Category,
   endpointQuestion: endPoints.Category.Question,
   endpointQuestionAnswer: endPoints.Category.QuestionAnswer,
+  endpointQuestionChat: endPoints.endpointQuestionChat,
 
   endpointGroupRow: endPoints.Group.Row,
   endpointGroup: endPoints.Group.Group,
