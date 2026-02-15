@@ -224,7 +224,7 @@ export const useData = (ws: string): [
       try {
         console.time();
         const filterEncoded = encodeURIComponent(filter);
-        const url = `${KnowledgeAPI.endpointQuestion}/${workspace}/${filterEncoded}/${count}/null`;
+        const url = `${KnowledgeAPI.endpointQuestion}/${workspace}/${filterEncoded}/${count}/null/null`;
         Execute("GET", url)
           .then((x: object) => {
             const dtosEx: IQuestionRowDtosEx = x as IQuestionRowDtosEx
