@@ -123,8 +123,8 @@ function App() {
       <div className="card p-1">
         
         <Button variant="primary" onClick={handleShow} className='my-1'>
-          <img width="64" height="64" src={stamena}  alt="Chat" className='rounded mx-auto d-block' />
-          I am your buddy.
+          <img width="64" height="84" src={stamena}  alt="Chat" className='rounded mx-auto d-block' />
+          <span className='fs-6'>I am your buddy.</span>
         </Button>
         {/* <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
