@@ -118,7 +118,7 @@ const ChatBotDlgNavigator = forwardRef<IChatBotDlgNavigatorMethods, { allCatRows
             const { id, hasSubCategories, numOfQuestions, title } = row;
             return (
                 <Accordion.Item eventKey={id}>
-                    <Accordion.Header className={`${!hasSubCategories ? 'hide-icon' : ''}`}>
+                    <Accordion.Header className={`${!hasSubCategories ? 'hide-icon' : ''} category-row`}>
                         {/* <ContextAwareToggle eventKey={row.id} hasSubCategories={row.hasSubCategories} isExpanded={row.isExpanded ? true : false}> */}
                             {row.link
                                 ? <a href="#" className="cat-link" onClick={() => navig(row)}>{title}</a>

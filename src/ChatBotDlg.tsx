@@ -12,8 +12,8 @@ import { type IQuestionEx, type IQuestionKey } from './categories/types'
 
 import { type IChatBotAnswer, type IChatBotDlgNavigatorMethods, type INextAnswer } from './global/types';
 
-import Q from './assets/Q.png';
-import A from './assets/A.png';
+import Q from './assets/QTrans.png';
+import A from './assets/ATrans.png';
 import { useData } from './hooks/useData';
 import ChatBotDlgNavigator from './ChatBotDlgNavigator';
 //import { useCategoryDispatch } from './categories/CategoryProvider';
@@ -284,8 +284,8 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     const QuestionComponent = (props: IChild) => {
         const { txt } = props;
         return (
-            <div id={autoSuggestId.toString()} className="d-flex flex-row mx-0 justify-content-start align-items-center">
-                <div className="d-flex flex-row mx-0 justify-content-start align-items-center">
+            <div id={autoSuggestId.toString()} className="d-flex flex-row mx-0 mt-1 justify-content-start align-items-center">
+                <div className="d-flex flex-row mx-0 justify-content-start align-items-center question-row">
                     <img width="22" height="18" src={Q} alt="Question" className='ms-1' />
                     <div className="p-1 bg-warning text-light flex-wrap text-wrap border rounded-1">{txt}</div>
                 </div>
@@ -305,7 +305,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                 {/* <Row>
                     <Col xs={12} md={12} className={`${isDisabled ? 'secondary' : 'primary'} d-flex justify-content-start align-items-center p-0`}> */}
 
-                <div className="d-flex flex-row mx-0 justify-content-start align-items-center">
+                <div className="d-flex flex-row mx-0 justify-content-start align-items-center answer-row">
                     <div className="d-flex flex-row mx-0 justify-content-start align-items-center">
                         <img width="22" height="18" src={A} alt="Answer" className='ms-1' />
                         {link
@@ -473,6 +473,27 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                     padding: 0rem 0.2rem !important;
                     padding-right: 0 !important;
                 }
+
+                .category-row
+                {
+                    background-color: rgb(224.4, 207.2, 252.4);
+                    color: #fff;
+                }
+                    
+                .question-row
+                {
+                    background-color: rgb(255, 205.4, 56.6);
+                    color: #fff;
+                    border: 1px solid rgb(255, 230.2, 155.8);
+                    border-radius: 1px;
+                }
+
+                .answer-row {
+                    background-color: rgb(61.4, 212.6, 243);
+                    color: #fff;
+                    border: 1px solid rgb(158.2, 233.8, 249);
+                    border-radius: 1px;
+                }
             }
             `}</style>
             {/* backdrop="static" */}
@@ -492,7 +513,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                         </Row>
                         {/* badge */}
                         <Row className="m-0">
-                            <Col className='border border-0 border-primary mx-1 text-white p-0'>
+                            <Col className='border border-0 border-primary mx-1 mt-2 text-white p-0'>
                                 {/* <div className="d-inline"> */}
                                 {/* <div key='Welcome'>
                                     <p><b>Welcome</b>, I am Buddy and I am here to help You</p>
