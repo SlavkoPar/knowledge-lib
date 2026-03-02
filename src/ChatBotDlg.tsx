@@ -51,13 +51,13 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     const [
         getChatQuestions,
         allCats, loadCats,
-        allCatRows, 
+        allCatRows,
         getQuestion, hasMoreAnswers, getNextAnswer,
         searchQuestions,
         addHistory, addHistoryFilter
     ] = useData("DEMO");
 
-    console.log(typeof(getChatQuestions)); // just for linter
+    console.log(typeof (getChatQuestions)); // just for linter
 
     useEffect(() => {
         (async () => {
@@ -68,7 +68,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
 
     //const [selectedQuestion, setSelectedQuestion] = useState<IQuestion | null>(null);
     //const [hasMoreAnswers, setHasMoreAnswers] = useState<boolean>(false);
-    
+
     const [autoSuggestId, setAutoSuggestId] = useState<number>(1);
     const [showAnswer, setShowAnswer] = useState(false);
     const [chatBotAnswer, setChatBotAnswer] = useState<IChatBotAnswer | null>(null);
@@ -96,7 +96,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
     // }, [])
 
 
-    
+
     const onEntering = async (/*node: HTMLElement, isAppearing: boolean*/): Promise<any> => {
         const startTime = performance.now();
         await childRef?.current?.resetNavigator();
@@ -403,7 +403,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
 
     const AutoSuggestComponent = (props: IChild) => {
         const { isDisabled, txt } = props;
-        return <div className="dark">
+        return <div className="dark mt-2">
             <label className="text-warning">Please enter the Question</label>
             <div className="text-start">
                 <div className="questions">
@@ -478,7 +478,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
             {/* backdrop="static" */}
             <Offcanvas show={show} onHide={onHide} placement='end' scroll={true} backdrop={true} onEntering={onEntering}> {/* backdropClassName='chat-bot-dlg' */}
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title className="fs-6">
+                    <Offcanvas.Title className="fs-6 mt-1">
                         I am your Buddy
                     </Offcanvas.Title>
                 </Offcanvas.Header>
@@ -486,6 +486,7 @@ const ChatBotDlg = ({ show, onHide }: IProps) => {
                     <Container id='container' fluid className='text-primary'> {/* align-items-center" */}
                         <Row className="m-0">
                             <Col>
+                                <label className="text-warning">Navigation</label>
                                 <ChatBotDlgNavigator allCatRows={allCatRows} ref={childRef} />
                             </Col>
                         </Row>
